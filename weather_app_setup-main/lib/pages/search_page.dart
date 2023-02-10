@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/weather_cubit/weather_cubit.dart';
 import 'package:weather_app/helper/api.dart';
 import 'package:weather_app/pages/weather_info.dart';
 import 'package:weather_app/services/weather_service.dart';
@@ -31,7 +33,10 @@ class SearchPage extends StatelessWidget {
                       color: Color.fromARGB(255, 18, 115, 21),
                     ),
                     onPressed: () {
-                      getWeather(city, context);
+                      //getWeather(city, context);
+                      BlocProvider.of<WeatherCubit>(context)
+                          .getWeather(cityName: city!);
+                      Navigator.pop(context);
                     },
                   ),
                   border: OutlineInputBorder(
@@ -61,12 +66,7 @@ class SearchPage extends StatelessWidget {
         return;
       }
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WeatherInfo(
-                    weatherModel: weatherModel,
-                  )));
+      Navigator.pop(context);
     }
   }
 }
